@@ -8,7 +8,7 @@
 
 ##  Project Scope
 
-Bud is a web-based productivity platform designed to help university students manage their academic workload while staying motivated through peer accountability. Students can log tasks, track their progress, connect with study buddies, and share resources to build a collaborative and supportive study environment.
+Bud is a web-based productivity platform designed to help university students manage their academic workload while staying motivated through peer accountability. Students can log tasks, track their progress, connect with study buddies, and share resources to build a collaborative and supportive study environment. hello
 
 ---
 
