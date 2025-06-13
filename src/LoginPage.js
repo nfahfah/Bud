@@ -27,7 +27,7 @@ function LoginPage() {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '100px' }}>
+        <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '70px'}}>
             <h2>Login</h2>
             <form onSubmit={handleSubmit} style={{ display: 'inline-block', textAlign: 'left' }}>
                 <div style={{ marginBottom: '10px' }}>
