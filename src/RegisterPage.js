@@ -41,7 +41,7 @@ function RegisterPage() {
         });
 
         setMessage('Registered successfully!');
-        navigate('/login');
+        navigate('/dashboard');
 
     } catch (error) {
         console.error("Error:", error.message);

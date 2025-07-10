@@ -81,25 +81,44 @@ function AddBuddy() {
   };
 
   return (
-  <div>
-    <form onSubmit={handleAddBuddy}>
-      <label>Enter Buddy's ID:</label>
-      <input value={buddyId} onChange={(e) => setBuddyId(e.target.value)} />
-      <br /><br />
-      <button type="submit">Add Your Buddy</button>
-    </form>
-    {message && (
-      <p
-        style={{
+    <div style={{
+      textAlign: 'center',
+      marginTop: '0',
+      minHeight: '100vh',
+      backgroundColor: '#b9b48d',
+      color: '#3c4215',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <h1 style={{ fontFamily: 'Impact, sans-serif', fontSize: '3rem' }}>BUD</h1>
+      <h2>Add a Buddy</h2>
+
+      <form onSubmit={handleAddBuddy} style={{ display: 'inline-block', textAlign: 'left' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <label>Enter Buddy's ID:</label><br />
+          <input
+            type="text"
+            value={buddyId}
+            onChange={(e) => setBuddyId(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit">Add Your Buddy</button>
+      </form>
+
+      {message && (
+        <p style={{
           marginTop: '20px',
-          color: message.includes('successfully') ? 'green' : 'red',
-        }}
-      >
-        {message}
-      </p>
-    )}
-  </div>
-);
+          color: message.includes('successfully') ? 'green' : 'red'
+        }}>
+          {message}
+        </p>
+      )}
+    </div>
+  );
 
 }
 
