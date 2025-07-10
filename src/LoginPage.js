@@ -45,7 +45,18 @@ function LoginPage() {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '100px' }}>
+    <div style={{
+      textAlign: 'center',
+      marginTop: '0',
+      minHeight: '100vh',
+      backgroundColor: '#b9b48d',
+      color: '#3c4215',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <h1 style={{ fontFamily: 'Impact, sans-serif', fontSize: '3rem' }}>BUD</h1>
       <h2>Login</h2>
 
       <form onSubmit={handleLogin} style={{ display: 'inline-block', textAlign: 'left' }}>
@@ -77,7 +88,7 @@ function LoginPage() {
       {message && <p style={{ marginTop: '20px', color: 'red' }}>{message}</p>}
 
       <p style={{ marginTop: '20px' }}>
-        Don't have an account? <Link to="/register">Register here</Link>
+        Don’t have an account? <Link to="/register">Register here</Link>
       </p>
     </div>
   );

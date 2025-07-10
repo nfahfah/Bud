@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
 import HomePage from './HomePage';
 import AccountSettings from './AccountSettings';
 import AddBuddy from './AddBuddy';
@@ -13,6 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} /> {/* ✅ fixed */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/account-settings" element={<AccountSettings />} />
