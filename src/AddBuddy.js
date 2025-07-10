@@ -1,79 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from './firebase'; // Adjust based on your firebase config
-import { collection, query, where, getDocs, updateDoc, arrayUnion } from 'firebase/firestore';
+import { collection, query, where, getDoc, getDocs, updateDoc, arrayUnion, doc } from 'firebase/firestore';
+
 
 
 function AddBuddy() {
-    const [buddyId, setBuddyId] = useState('');
-    const [message, setMessage] = useState('');
-    const [userCourse, setUserCourse] = useState(''); // This state is not used in this component, but can be useful for future reference
+  const [buddyId, setBuddyId] = useState('');
+  const [message, setMessage] = useState('');
+  const [userCourse, setUserCourse] = useState('');
 
-    // get current user id and course
-    useEffect(() => {
-        async function fetchUserCourse() {
-            if (!auth.currentUser) {
-                setMessage('You must be logged in to add a buddy.');
-                return;
-            }
+  // Get current user ID and course on load
+  useEffect(() => {
+    async function fetchUserCourse() {
+      if (!auth.currentUser) {
+        setMessage('No logged in user.');
+        return;
+      }
 
-            const userEmail = auth.currentUser.email;
-            const usersRef = collection(db, 'users');
-            const q = query(usersRef, where('email', '==', userEmail));
-            const querySnapshot = await getDocs(q);
-            if (querySnapshot.empty) {
-                const userData = querySnapshot.docs[0].data();
-                setUserCourse(userData.course || ''); // Set user course if available
-            } else {
-                setMessage('User not found.');
-            }
-        }
-        fetchUserCourse();
-    }, []);
-    const handleAddBuddy = async (e) => {
-        e.preventDefault();
-        setMessage('');
+      const userEmail = auth.currentUser.email;
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', userEmail));
+      const querySnapshot = await getDocs(q);
 
-        try {
-            // check if buddy's user id exists
-            const usersRef = collection(db, 'users');
-            const q = query(usersRef, where('userId', '==', buddyId));
-            const querySnapshot = await getDocs(q);
-            if (querySnapshot.empty) {
-                setMessage('No user found with that user ID.');
-                return;
-            }
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        setUserCourse(userData.course);
+      } else {
+        setMessage('User data not found.');
+      }
+    }
+    fetchUserCourse();
+  }, []);
 
-            const buddyData = querySnapshot.docs[0].data();
+  const handleAddBuddy = async (e) => {
+    e.preventDefault();
+    setMessage('');
 
-            // check if buddy is in the same course
-            if (buddyData.course !== userCourse) {
-                setMessage('Buddy must be in the same course.');
-                return;
-            }
+    try {
+      // Check if buddyId exists
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('userId', '==', buddyId));
+      const querySnapshot = await getDocs(q);
 
-            //add buddy to current user's buddies array
-            const currentUserEmail = auth.currentUser.email;
-            const userQuery = query(usersRef, where('email', '==', currentUserEmail));
-            const userSnapshot = await getDocs(userQuery);
-            if (userSnapshot.empty) {
-                setMessage('Current user not found.');
-                return;
-            }
+      if (querySnapshot.empty) {
+        setMessage('Buddy user ID not found.');
+        return;
+      }
 
-            const currentUserDocId = currentUserSnapshot.docs[0].id;
-            const currentUserDocRef = doc(db, 'users', currentUserDocId);
-            await updateDoc(currentUserDocRef, {
-                buddies: arrayUnion(buddyData.uid) // Assuming buddyData.uid is the UID of the buddy
-            });
-            setMessage('Buddy added successfully!');
-            setBuddyId('');
-        } catch (error) {
-            console.error('Error adding buddy:', error);
-            setMessage(`Failed to add your buddy: ${error.message}`);
-        }
-    };
+      const buddyData = querySnapshot.docs[0].data();
 
-    return (
+      // Check if buddy is in the same course
+      if (buddyData.course !== userCourse) {
+        setMessage('Buddy is not in the same course.');
+        return;
+      }
+
+      // Add buddy to current user's buddy list
+      const currentUserEmail = auth.currentUser.email;
+      const currentUserQuery = query(usersRef, where('email', '==', currentUserEmail));
+      const currentUserSnapshot = await getDocs(currentUserQuery);
+
+      if (currentUserSnapshot.empty) {
+        setMessage('Current user data not found.');
+        return;
+      }
+
+      const currentUserDocId = currentUserSnapshot.docs[0].id;
+      const currentUserDocRef = doc(db, 'users', currentUserDocId);
+
+      await updateDoc(currentUserDocRef, {
+        buddies: arrayUnion(buddyId)
+      });
+
+      setMessage('Buddy added successfully!');
+      setBuddyId(''); // clear input
+    } catch (error) {
+      console.error('Error adding buddy:', error);
+      setMessage('Failed to add buddy. Please try again.');
+    }
+  };
+
+  return (
   <div>
     <form onSubmit={handleAddBuddy}>
       <label>Enter Buddy's ID:</label>
@@ -94,7 +101,7 @@ function AddBuddy() {
   </div>
 );
 
-         
 }
 
 export default AddBuddy;
+

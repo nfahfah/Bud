@@ -1,18 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import HomePage from './HomePage';
-import AccountSettings from './AccountSettings'; // You will create this later
-import AddBuddy from './AddBuddy'; // Existing page you mentioned
-import ResourcesView from './ResourcesView'; // You will create this later
-import ResourcesSharing from './ResourcesSharing'; // You will create this later
-import TaskList from './TaskList'; // You will create this later
-
+import AccountSettings from './AccountSettings';
+import AddBuddy from './AddBuddy';
+import ResourcesView from './ResourcesView';
+import ResourcesSharing from './ResourcesSharing';
+import TaskList from './TaskList';
+import Dashboard from './DashboardPage'; // ✅ matches with usage below
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} /> {/* ✅ fixed */}
         <Route path="/home" element={<HomePage />} />
         <Route path="/account-settings" element={<AccountSettings />} />
         <Route path="/add-buddy" element={<AddBuddy />} />
@@ -25,5 +26,6 @@ function App() {
 }
 
 export default App;
+
 
 

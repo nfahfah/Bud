@@ -23,10 +23,10 @@ function DashboardPage() {
           flexDirection: 'column',
           gap: '15px'
         }}>
-          <button onClick={() => navigate('/add-buddy')}>➕ Add Study Buddy</button>
-          <button onClick={() => navigate('/tasks')}>✅ Task List</button>
+          <button onClick={() => navigate('/add-buddy')}>👥 Add Study Buddy</button>
+          <button onClick={() => navigate('/tasks')}>💻 Task List</button>
           <button onClick={() => navigate('/resources/view')}>📚 View Resources</button>
-          <button onClick={() => navigate('/resources/share')}>📤 Share Resources</button>
+          <button onClick={() => navigate('/resources/share')}>📨 Share Resources</button>
         </div>
 
         {/* Main Content */}
@@ -43,8 +43,8 @@ function DashboardPage() {
           </div>
 
           <div>
-            <p><strong>🔔 Notifications:</strong> (e.g., “Sheep shared &lt;filename&gt; with you!”)</p>
-            <p><strong>🔥 Top 3 Most Urgent Tasks:</strong> (with due dates)</p>
+            <p><strong> Notifications:</strong> (e.g., “Your buddy shared &lt;filename&gt; with you!”)</p>
+            <p><strong> Top 3 Most Urgent Tasks:</strong> (with due dates)</p>
           </div>
         </div>
       </div>
